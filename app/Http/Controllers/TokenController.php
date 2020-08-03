@@ -23,11 +23,17 @@ class TokenController extends Controller
 
         if (is_null($usuario)
             || !Hash::check($request->senha, $usuario->makeVisible(['senha'])->senha)) {
-            return response()->json('', 401);
+            return response()->json(['erro' => 'Usuário ou senha inválidos'], 401);
         }
 
         $token = JWT::encode(
-            ['email' => $request->email],
+            [
+                'iss' => 'lumen-api-series',
+                'sub' => $request->email,
+                'iat' => time(),
+                'exp' => time() + (60*60),
+                'uid' => $usuario->id
+            ],
             env('PRIVATE_KEY'), 'HS256');
 
         return [
