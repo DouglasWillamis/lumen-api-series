@@ -10,9 +10,10 @@ abstract class BaseController extends Controller
 
     protected $classe;
 
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json($this->classe::all(), Response::HTTP_OK);
+        $series = $this->classe::paginate($request->per_page);
+        return response()->json($series, Response::HTTP_OK);
     }
 
     public function store(Request $request)
