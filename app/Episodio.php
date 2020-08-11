@@ -6,14 +6,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 
 class Episodio extends Model
 {
     use SoftDeletes;
     public $timestamps = true;
-    protected $fillable = ['nome', 'temporada', 'assistido', 'numero', 'serie_id'];
-    protected $appends = ['links', 'serie'];
-    protected $hidden = ['serie_id'];
+    protected $fillable = ['nome', 'temporada', 'assistido', 'numero', 'serie'];
+    protected $appends = ['links'];
+    protected $hidden = ['serie_id', 'created_at', 'updated_at', 'deleted_at'];
 
     public function serie() {
         return $this->belongsTo(Serie::class);
@@ -31,7 +32,11 @@ class Episodio extends Model
         ];
     }
 
-    public function getSerieAttribute(): object {
-        return $this->serie()->get();
+//    public function getSerieAttribute(): object {
+//        return $this->serie()->get();
+//    }
+
+    public function setSerieAttribute($serie): void {
+        $this->attributes['serie_id'] = $serie['id'];
     }
 }

@@ -11,6 +11,7 @@ class Serie extends Model
     public $timestamps = true;
     protected $fillable = ['nome'];
     protected $appends = ['links'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
     public function episodios()
     {
