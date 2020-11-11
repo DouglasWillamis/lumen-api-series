@@ -15,6 +15,7 @@ class Episodio extends Model
     protected $fillable = ['nome', 'temporada', 'assistido', 'numero', 'serie'];
     protected $appends = ['links'];
     protected $hidden = ['serie_id', 'created_at', 'updated_at', 'deleted_at'];
+    protected $perPage = 5;
 
     public function serie() {
         return $this->belongsTo(Serie::class);

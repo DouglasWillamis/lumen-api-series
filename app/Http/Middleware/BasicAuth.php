@@ -12,13 +12,11 @@ class BasicAuth
 
     public function handle(Request $request, Closure $next)
     {
-        $AUTH_USER = env('AUTH_USER');
-        $AUTH_PASS = env('AUTH_PASS');
         $forneceuCredenciais = !(empty($_SERVER['PHP_AUTH_USER']) && empty($_SERVER['PHP_AUTH_PW']));
         $naoEstaAutenticado = (
             !$forneceuCredenciais ||
-            $_SERVER['PHP_AUTH_USER'] !== $AUTH_USER ||
-            $_SERVER['PHP_AUTH_PW']   !== $AUTH_PASS
+            $_SERVER['PHP_AUTH_USER'] !== env('AUTH_USER') ||
+            $_SERVER['PHP_AUTH_PW']   !== env('AUTH_PASS')
         );
         if ($naoEstaAutenticado) {
             return response()->json(['erro' => 'Não autorizado'], Response::HTTP_UNAUTHORIZED);

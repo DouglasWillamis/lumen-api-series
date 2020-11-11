@@ -12,6 +12,8 @@ class Serie extends Model
     protected $fillable = ['nome'];
     protected $appends = ['links'];
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    protected $perPage = 5;
+
 
     public function episodios()
     {
